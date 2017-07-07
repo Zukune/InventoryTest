@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "854215346684",
+    "firebase_url": "https://test-2aedb.firebaseio.com",
+    "project_id": "test-2aedb",
+    "storage_bucket": "test-2aedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854215346684:android:5cb17ba5098c89fa",
+        "android_client_info": {
+          "package_name": "com.mangaschool_app.testfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854215346684-ngk0kktr57sdk03q7784k3vfvgt4sapm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA9YjkDQHw0nTsk1YUm2cZ0ziMhA41qyA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
