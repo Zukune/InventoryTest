@@ -83,38 +83,38 @@ public class MainActivity extends AppCompatActivity {
         mBlogList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    //View Holder For Recycler View
     public static class BlogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         Context context;
         View mView;
-        RecyclerView clicked;
 
 
         public BlogViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             context =itemView.getContext();
+            itemView.setOnClickListener(this);
 
-            clicked = (RecyclerView) itemView.findViewById(R.id.blog_list);
-
-        }
-
-        void setOnClickListener(){
-            clicked.setOnClickListener(this);
         }
 
 
         public void setTitle(String title) {
+
             TextView post_title = (TextView) mView.findViewById(R.id.titleText);
             post_title.setText(title);
+
         }
 
-        public void setImage(final Context ctx, final String image) {
-            final ImageView post_image = (ImageView) mView.findViewById(R.id.imageViewy);
-            // We Need TO pass Context
 
+        public void setImage(final Context ctx, final String image) {
+
+            final ImageView post_image = (ImageView) mView.findViewById(R.id.imageViewy);
+
+            // We Need TO pass Context
             //Picasso.with(ctx).load(image).into(post_image);
-            Picasso.with(ctx).load(image).networkPolicy(NetworkPolicy.OFFLINE).into(post_image, new Callback() {
+
+           Picasso.with(ctx).load(image).networkPolicy(NetworkPolicy.OFFLINE).into(post_image, new Callback() {
+
                 @Override
                 public void onSuccess() {
 
@@ -122,20 +122,27 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onError() {
+
                     Picasso.with(ctx).load(image).into(post_image);
+
                 }
+
             });
 
         }
 
+
         @Override
+
         public void onClick(View view) {
+
             Intent intent = new Intent(context, Slidershow.class);
             context.startActivity(intent);
 
-
         }
+
     }
+
 }
 
 
