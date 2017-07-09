@@ -25,7 +25,8 @@ import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
-
+    
+public static final String KEY_ITEM = "clicked item";
     private RecyclerView mBlogList;
     DatabaseReference myRef;
 
@@ -34,11 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //Recycler View
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-
-
+        
         mBlogList = (RecyclerView) findViewById(R.id.blog_list);
         mBlogList.setHasFixedSize(true);
         mBlogList.setLayoutManager(new LinearLayoutManager(this));
@@ -66,37 +65,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<ModelClass, BlogViewHolder> firebaseRecyclerAdapter =
+        final FirebaseRecyclerAdapter<ModelClass, BlogViewHolder> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<ModelClass, BlogViewHolder>(
                         ModelClass.class,
                         R.layout.design_row,
                         BlogViewHolder.class,
                         myRef) {
 
-
                     @Override
-                    protected void populateViewHolder(BlogViewHolder viewHolder, ModelClass model, int position) {
+                    protected void populateViewHolder(final BlogViewHolder viewHolder, final ModelClass model, final int position) {
                         viewHolder.setTitle(model.getTitle());
                         viewHolder.setImage(getApplicationContext(), model.getImage());
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), Slidershow.class);
+                                i.putExtra(KEY_ITEM, clickedItem);
+                                startActivity(i);
+
+                            }
+                        });
                     }
                 };
         mBlogList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class BlogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    //View Holder For Recycler View
+    //View Holder For Recycler View
+
+    public static class BlogViewHolder extends RecyclerView.ViewHolder  {
 
         Context context;
         View mView;
-
-
+        
         public BlogViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             context =itemView.getContext();
-            itemView.setOnClickListener(this);
+
 
         }
-
 
         public void setTitle(String title) {
 
@@ -105,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
         public void setImage(final Context ctx, final String image) {
 
             final ImageView post_image = (ImageView) mView.findViewById(R.id.imageViewy);
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             // We Need TO pass Context
             //Picasso.with(ctx).load(image).into(post_image);
 
-           Picasso.with(ctx).load(image).networkPolicy(NetworkPolicy.OFFLINE).into(post_image, new Callback() {
+            Picasso.with(ctx).load(image).networkPolicy(NetworkPolicy.OFFLINE).into(post_image, new Callback() {
 
                 @Override
                 public void onSuccess() {
@@ -131,20 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-        @Override
-
-        public void onClick(View view) {
-
-            Intent intent = new Intent(context, Slidershow.class);
-            context.startActivity(intent);
-
-        }
-
     }
 
 }
-
 
 
 
